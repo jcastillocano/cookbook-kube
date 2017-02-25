@@ -74,7 +74,7 @@ end
 docker_service 'default' do
   bip lazy { resources('flannel_service[default]').subnetfile_subnet }
   mtu lazy { resources('flannel_service[default]').subnetfile_mtu }
-  install_method node['docker']['install_method'] unless ['docker']['install_method'].nil?
+  install_method node['docker']['install_method'] unless node['docker']['install_method'].nil?
 
   http_proxy node['proxy']['http'] unless node['proxy']['http'].nil?
   https_proxy node['proxy']['https'] unless node['proxy']['https'].nil?
