@@ -1,0 +1,30 @@
+---
+driver:
+  name: ec2
+
+platforms:
+  - name: rhel-7
+    driver:
+      image_search:
+        name: bl-rhel-7.*
+        architecture: x86_64
+        virtualization-type: hvm
+        image-type: machine
+    attributes:
+      proxy:
+        http: http://proxy.skylab.emsaws.com:8080
+        https: http://proxy.skylab.emsaws.com:8080
+        no_proxy: 169.254.169.254,10.0.0.0/8,172.16.0.0/12,.intuit.net,corp.intuit.net,localhost,127.0.0.1,10.153.195.102
+
+verifier:
+  name: inspec
+  format: doc
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: true
+
+suites:
+  - name: default
+    run_list:
+      - kube_test

@@ -38,16 +38,28 @@ kube_controller_manager 'default' do
 end
 
 # Node
+case node['platform_family']
+when 'debian'
+  include_recipe 'apt'
 
-include_recipe 'apt'
+  apt_repository 'docker' do
+    uri 'https://apt.dockerproject.org/repo'
+    distribution 'debian-jessie'
+    components %w(main)
+    keyserver 'p80.pool.sks-keyservers.net'
+    key '58118E89F3A912897C070ADBF76221572C52609D'
+    cache_rebuild true
+  end
 
-apt_repository 'docker' do
-  uri 'https://apt.dockerproject.org/repo'
-  distribution 'debian-jessie'
-  components %w(main)
-  keyserver 'p80.pool.sks-keyservers.net'
-  key '58118E89F3A912897C070ADBF76221572C52609D'
-  cache_rebuild true
+  node.set['docker']['install_method'] = 'package'
+  node.set['docker']['version'] = '1.9.1'
+when 'rhel'
+  yum_repository 'rhui-REGION-rhel-server-extras' do
+    enabled true
+  end
+  node.set['docker']['install_method'] = nil
+  node.set['docker']['version'] = nil
+else fail("Platform family #{node['platform_family']} not supported")
 end
 
 flannel_service 'default' do
@@ -62,8 +74,12 @@ end
 docker_service 'default' do
   bip lazy { resources('flannel_service[default]').subnetfile_subnet }
   mtu lazy { resources('flannel_service[default]').subnetfile_mtu }
-  install_method 'package'
-  version '1.9.1'
+  install_method node['docker']['install_method'] unless ['docker']['install_method'].nil?
+
+  http_proxy node['proxy']['http'] unless node['proxy']['http'].nil?
+  https_proxy node['proxy']['https'] unless node['proxy']['https'].nil?
+  no_proxy node['proxy']['no_proxy'] unless node['proxy']['no_proxy'].nil?
+  version node['docker']['version'] unless node['docker']['version'].nil?
 end # needed by kubelet_service[default]
 
 kubelet_service 'default' do
