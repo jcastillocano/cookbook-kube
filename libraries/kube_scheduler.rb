@@ -4,11 +4,11 @@ module KubernetesCookbook
     resource_name :kube_scheduler
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' +
-               '/release/v1.4.0/bin/linux/amd64/kube-scheduler'
+             default: 'https://storage.googleapis.com/kubernetes-release' \
+                      '/release/v1.4.0/bin/linux/amd64/kube-scheduler'
     property :checksum, String,
-      default: '81c58a78e25ddfa3273ed2cef89c567f'\
-               '759efd5c5f1489cef267b0ded856c4c7'
+             default: '81c58a78e25ddfa3273ed2cef89c567f'\
+                      '759efd5c5f1489cef267b0ded856c4c7'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
@@ -61,12 +61,15 @@ module KubernetesCookbook
     property :algorithm_provider, default: 'DefaultProvider'
     property :bind_pods_burst, default: 100
     property :bind_pods_qps, default: 50
-    property :failure_domains, default: 'kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region'
+    property :failure_domains, default: \
+      'kubernetes.io/hostname,failure-domain.beta.kubernetes.io/' \
+      'zone,failure-domain.beta.kubernetes.io/region'
     property :feature_gates
     property :google_json_key
     property :hard_pod_affinity_symmetric_weight, default: 1
     property :kube_api_burst, default: 100
-    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_content_type, default: \
+      'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 50
     property :kubeconfig
     property :leader_elect, default: true
@@ -82,5 +85,4 @@ module KubernetesCookbook
 
     property :v, default: 0
   end
-
 end

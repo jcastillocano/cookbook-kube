@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 name 'kube_test'
 
 depends 'apt'

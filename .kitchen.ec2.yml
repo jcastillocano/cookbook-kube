@@ -28,3 +28,10 @@ suites:
   - name: default
     run_list:
       - kube_test
+    attributes:
+      docker:
+        repository:
+          name: rhui-REGION-rhel-server-extras
+          enabled: true
+        install_method: null
+        version: null

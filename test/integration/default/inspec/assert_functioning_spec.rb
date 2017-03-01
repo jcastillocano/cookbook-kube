@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 ############################
 # recipe[kube_test::default]
 ############################

@@ -20,3 +20,15 @@ suites:
   - name: default
     run_list:
       - kube_test
+    attributes:
+      docker:
+        install_method: package
+        version: 1.9.1
+        repository:
+          name: docker
+          url: https://apt.dockerproject.org/repo
+          distro: debian-jessie
+          components: ['main']
+          keyserver: p80.pool.sks-keyservers.net
+          key: 58118E89F3A912897C070ADBF76221572C52609D
+          cache_rebuild: true

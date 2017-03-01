@@ -4,11 +4,11 @@ module KubernetesCookbook
     resource_name :kube_apiserver
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-apiserver'
+             default: 'https://storage.googleapis.com/kubernetes-release' \
+                      '/release/v1.4.0/bin/linux/amd64/kube-apiserver'
     property :checksum, String,
-      default: '1638e88dec8e33e7099006638507916f' \
-               '889087a98790a3e485db03204291ec9a'
+             default: '1638e88dec8e33e7099006638507916f' \
+                      '889087a98790a3e485db03204291ec9a'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create

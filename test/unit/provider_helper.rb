@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module ProviderInspection
   def compile_and_converge_action(&block)
     old_run_context = @run_context

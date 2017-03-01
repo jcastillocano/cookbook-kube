@@ -42,24 +42,23 @@ case node['platform_family']
 when 'debian'
   include_recipe 'apt'
 
-  apt_repository 'docker' do
-    uri 'https://apt.dockerproject.org/repo'
-    distribution 'debian-jessie'
-    components %w(main)
-    keyserver 'p80.pool.sks-keyservers.net'
-    key '58118E89F3A912897C070ADBF76221572C52609D'
-    cache_rebuild true
+  node['docker']['repository'].tap do |repo|
+    apt_repository repo['name'] do
+      uri repo['uri']
+      distribution repo['distro']
+      components repo['components']
+      keyserver repo['keyserver']
+      key repo['key']
+      cache_rebuild repo['cache_rebuild']
+    end
   end
-
-  node.set['docker']['install_method'] = 'package'
-  node.set['docker']['version'] = '1.9.1'
 when 'rhel'
-  yum_repository 'rhui-REGION-rhel-server-extras' do
-    enabled true
+  node['docker']['repository'].tap do |repo|
+    yum_repository repo['name'] do
+      enabled repo['enabled']
+    end
   end
-  node.set['docker']['install_method'] = nil
-  node.set['docker']['version'] = nil
-else fail("Platform family #{node['platform_family']} not supported")
+else raise("Platform family #{node['platform_family']} not supported")
 end
 
 flannel_service 'default' do
@@ -71,10 +70,11 @@ directory '/etc/kubernetes/manifests' do
   recursive true
 end
 
+docker_install_method = node['docker']['install_method']
 docker_service 'default' do
   bip lazy { resources('flannel_service[default]').subnetfile_subnet }
   mtu lazy { resources('flannel_service[default]').subnetfile_mtu }
-  install_method node['docker']['install_method'] unless node['docker']['install_method'].nil?
+  install_method docker_install_method unless docker_install_method.nil?
 
   http_proxy node['proxy']['http'] unless node['proxy']['http'].nil?
   https_proxy node['proxy']['https'] unless node['proxy']['https'].nil?

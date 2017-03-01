@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'cheffish/chef_run'
 require 'chef'
 
@@ -59,7 +60,7 @@ end
 module Provider
   require_relative 'provider_helper'
 
-  def provider(action = :start, &block)
+  def provider(_action = :start, &block)
     @provider ||= begin
       run = Cheffish::ChefRun.new
       resource = run.compile_recipe do
@@ -86,7 +87,7 @@ class ActionCreateTest < Minitest::Test
     assert_equal 'https:///kube-apiserver', binary.source
   end
 
-  def test_passes_the_source_remote
+  def test_passes_the_source_remote_checksum
     provider :create do
       checksum 'the-checksum'
     end

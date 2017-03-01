@@ -6,11 +6,11 @@ module KubernetesCookbook
     resource_name :kube_controller_manager
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-controller-manager'
+             default: 'https://storage.googleapis.com/kubernetes-release' \
+                      '/release/v1.4.0/bin/linux/amd64/kube-controller-manager'
     property :checksum, String,
-      default: '5ad2703a4fbd2b554ff857252ec5e28f'\
-               '9259cabd75786e0606d15fcae85b6322'
+             default: '5ad2703a4fbd2b554ff857252ec5e28f'\
+                      '9259cabd75786e0606d15fcae85b6322'
     property :run_user, String, default: 'kubernetes'
 
     default_action :create
@@ -86,12 +86,14 @@ module KubernetesCookbook
     property :enable_garbage_collector, default: true
     property :enable_hostpath_provisioner
     property :feature_gates
-    property :flex_volume_plugin_dir, default: '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/'
+    property :flex_volume_plugin_dir, default: \
+      '/usr/libexec/kubernetes/kubelet-plugins/volume/exec/'
     property :google_json_key
     property :horizontal_pod_autoscaler_sync_period, default: '30s'
     property :insecure_experimental_approve_all_kubelet_csrs_for_group
     property :kube_api_burst, default: 30
-    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_content_type, default: \
+      'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 20
     property :kubeconfig
     property :large_cluster_size_threshold, default: 50

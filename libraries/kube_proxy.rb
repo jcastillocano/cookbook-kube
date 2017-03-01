@@ -4,11 +4,11 @@ module KubernetesCookbook
     resource_name :kube_proxy
 
     property :remote, String,
-      default: 'https://storage.googleapis.com/kubernetes-release' \
-               '/release/v1.4.0/bin/linux/amd64/kube-proxy'
+             default: 'https://storage.googleapis.com/kubernetes-release' \
+                      '/release/v1.4.0/bin/linux/amd64/kube-proxy'
     property :checksum, String,
-      default: '3cebe9f93af9fa7a2351012cc209b679' \
-               '3d251b3679fe8e7d344a9eb79f9e6a2e'
+             default: '3cebe9f93af9fa7a2351012cc209b679' \
+                      '3d251b3679fe8e7d344a9eb79f9e6a2e'
 
     default_action :create
 
@@ -66,7 +66,8 @@ module KubernetesCookbook
     property :iptables_masquerade_bit, default: 14
     property :iptables_sync_period, default: '30s'
     property :kube_api_burst, default: 10
-    property :kube_api_content_type, default: 'application/vnd.kubernetes.protobuf'
+    property :kube_api_content_type, default: \
+      'application/vnd.kubernetes.protobuf'
     property :kube_api_qps, default: 5
     property :kubeconfig
     property :log_flush_frequency, default: '5s'

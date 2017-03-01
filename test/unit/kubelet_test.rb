@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'chef'
 require 'cheffish/chef_run'
 
